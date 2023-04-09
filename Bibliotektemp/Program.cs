@@ -1,4 +1,5 @@
 ﻿using Newtonsoft.Json;
+using System.Collections.Generic;
 
 namespace Bibliotektemp
 {
@@ -6,14 +7,15 @@ namespace Bibliotektemp
     {
 
         public static Person? loggedInPerson;
-        public string userData = File.ReadAllText("C:\\Users\\adria\\Documents\\Bibliotektemp\\Bibliotektemp\\userAccounts.json");
+        public static string userData = File.ReadAllText("C:\\Users\\adria\\Documents\\Bibliotektemp\\Bibliotektemp\\userAccounts.json");
         static void Main(string[] args)
         {
-            FirstPage();
-        }
+            string Data = File.ReadAllText("C:\\Users\\adria\\Documents\\Bibliotektemp\\Bibliotektemp\\userAccounts.json");
+            List<Person> UserList = JsonConvert.DeserializeObject<List<Person>>(Data)!;
 
-        static void FirstPage()
-        {
+            string userData = File.ReadAllText("C:\\Users\\adria\\Documents\\Bibliotektemp\\Bibliotektemp\\userAccounts.json");
+            //dynamic personData = JsonConvert.DeserializeObject<dynamic>(Data)!;
+            List<Book> BookList = JsonConvert.DeserializeObject<List<Book>>(userData)!;
             Console.WriteLine("hej och välkommen till Biblioteket i väst");
             Console.WriteLine("Vad skulle du vilja göra?");
             Console.WriteLine("1. Skapa konto, 2. Logga in");
@@ -22,16 +24,17 @@ namespace Bibliotektemp
 
             if (val == "1")
             {
-                AccountHandler.RegisterPage();
+                AccountHandler.RegisterPage(UserList);
             }
 
             if (val == "2")
             {
                 AccountHandler.LoginPage();
-            }
-
+            } 
         }
-        public void LoggedUser()
+
+       
+        public static void LoggedUser()
         {
             dynamic personData = JsonConvert.DeserializeObject<dynamic>(userData)!;
             foreach (var i in personData)
@@ -39,10 +42,10 @@ namespace Bibliotektemp
                 loggedInPerson = new Person((int)i.personnummer, (int)i.lösenord);
             }
         }
-        public static void MainPage()
+        public static void MainPage(Person User)
         {
-            string bookData = File.ReadAllText(@"C:\Users\adria\Downloads\ConsoleApp1\ConsoleApp1\ConsoleApp1\Books.json");
-            List<Book> BookList = JsonConvert.DeserializeObject<List<Book>>(bookData)!;
+            //string bookData = File.ReadAllText(@"C:\Users\adria\Downloads\ConsoleApp1\ConsoleApp1\ConsoleApp1\Books.json");
+            //List<Book> BookList = JsonConvert.DeserializeObject<List<Book>>(bookData)!;
             Console.WriteLine("Nu är du inloggad");
             Console.WriteLine("Vad vill du göra nu?");
             Console.WriteLine("1. Lista böcker,2. Söka böcker,3. Ändra kontouppgifter ,4. Logga ut");
@@ -51,7 +54,7 @@ namespace Bibliotektemp
 
             if(val == "1")
             {
-                BookHandler.Handlebook.ListAllbooks();
+                BookHandler.Handlebook.ListAllbooks(User);
             }
             if (val == "2")
             {

@@ -14,6 +14,10 @@ namespace Bibliotektemp
         public string? Författare { get; set; }
         public bool Ledig { get; set; }
 
+        public Book()
+        {
+            // parameterless constructor
+        }
         public Book(string bokTitel, int bokAntal, int bokSerienummer, string bokFörfattare, bool bokLedig = true)
         {
             this.Titel = bokTitel;
@@ -23,5 +27,11 @@ namespace Bibliotektemp
             this.Ledig = bokLedig;
         }
 
+        public Book(string titel, int serienummer, string författare)
+        {
+            Titel = titel;
+            Serienummer = serienummer;
+            Författare = författare;
+        }
     }
 }

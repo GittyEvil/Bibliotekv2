@@ -5,7 +5,16 @@
     "förnamn": "",
     "efternamn": "",
     "id": null,
-    "personnummer": 403,
+    "personnummer": 123,
+    "lösenord": 123
+  },
+  {
+    "RentedBooks": [
+    ],
+    "förnamn": "",
+    "efternamn": "",
+    "id": null,
+    "personnummer": 1234,
     "lösenord": 1234
   }
 ]
