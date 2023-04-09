@@ -38,8 +38,8 @@ namespace Bibliotektemp
 
                 if (personnummer.ToString() == number && password == password1.ToString())
                 {
-                    Program.MainPage(User);
                     User = user;
+                    Program.MainPage(User);
                     return;
                 }
 

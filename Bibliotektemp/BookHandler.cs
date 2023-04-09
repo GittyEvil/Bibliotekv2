@@ -36,6 +36,7 @@ namespace Bibliotektemp
                 {
                     Book book = BookList[i];
                     Console.WriteLine($"{i + 1}.{book.Titel} {book.Författare} {book.Serienummer} {book.Antal}");
+                    book.Ledig = true;
                 }
                 
                 Console.WriteLine("Skulle du vilja söka efter en specifik bok? 1:Ja, 2:Nej");
@@ -52,7 +53,7 @@ namespace Bibliotektemp
                     if (isNumber && number > 0 && number < BookList.Count + 1)
                     {
                         var chosenbook = BookList[number - 1];
-                        SpecifikBookPage(User, chosenbook);
+                        SpecifikBookPage(User, chosenbook, BookList);
                     }
                     
                 }
@@ -62,7 +63,7 @@ namespace Bibliotektemp
                 }
             }
 
-            public static void SpecifikBookPage(Person User, Book book)
+            public static void SpecifikBookPage(Person User, Book book, List<Book> BookList)
             {
                 Console.WriteLine(book.Titel);
                 Console.WriteLine(book.Författare);
@@ -113,7 +114,7 @@ namespace Bibliotektemp
                 {
                     //System.Lånabok(bok);
 
-                    Lånabok(book);
+                    Lånabok(book, User, BookList);
                 }
 
                 else if (choice == "2" && UserisRenting)
@@ -124,21 +125,21 @@ namespace Bibliotektemp
             }
 
             }
-            static void Lånabok(Book book)
+            static void Lånabok(Book book, Person User,List<Book> BookList)
             {
                 
                 
                 if(book.Ledig)
                 {
-                    string Data = File.ReadAllText(@"C:\Users\adria\Documents\Bibliotektemp\Bibliotektemp\Books.json");
+                    string Data = @"C:\Users\adria\Documents\Bibliotektemp\Bibliotektemp\userAccounts.json";
 
-                    Book rentedBook = new Book(book.Titel, Int32.Parse(book.Författare!), book.Serienummer.ToString());
+                    Book rentedBook = new Book(book.Titel!);
 
                     book.Ledig = false;
 
-                    //Person.RentedBooks.Add(rentedBook);
-                    //string RawJson = JsonConvert.SerializeObject(BooksList, Formatting.Indented);
-                    //File.WriteAllText(Data,);
+                    User.RentedBooks.Add(rentedBook);
+                    string rentBook = JsonConvert.SerializeObject(BookList, Formatting.Indented);
+                    File.WriteAllText(Data,rentBook);
                     Console.WriteLine($"Du har lånat boken '{book.Titel}'. Glöm inte att lämna tillbaka den senast om tre veckor.");
                 }
             {

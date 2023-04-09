@@ -33,5 +33,9 @@ namespace Bibliotektemp
             Serienummer = serienummer;
             Författare = författare;
         }
+        public Book(string titel)
+        {
+            Titel = titel;
+        }
     }
 }
