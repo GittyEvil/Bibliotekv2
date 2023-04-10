@@ -38,7 +38,7 @@ namespace Bibliotektemp
                 {
                     Book book = BookList[i];
                     Console.WriteLine($"{i + 1}.{book.Titel} {book.Författare} {book.Serienummer} {book.Antal}");
-                    book.Ledig = true;
+                    //book.Ledig = true;
                 }
                 
                 Console.WriteLine("Skulle du vilja söka efter en specifik bok? 1:Ja, 2:Nej");
@@ -119,7 +119,6 @@ namespace Bibliotektemp
 
                 else if (choice == "2" && UserisRenting)
                 {
-                    //System.Returnbooks(bok);
                     LämnatillbakaBöcker(book, User, BookList, UserList);
                 }
             }
@@ -156,6 +155,13 @@ namespace Bibliotektemp
             public static void LämnatillbakaBöcker(Book book, Person User, List<Book> BookList, List<Person> UserList)
             {
                 //Behöver kolla användarens rentedbooks, stämmer boken som man valt över med boken i userns lista så ska den lämna tillbaka boken, fixa med antal osv
+                Book bookremover = null;
+                foreach(Book Removebook in User.RentedBooks)
+                {
+                    bookremover = Removebook;
+                    User.RentedBooks.Remove(bookremover);
+                }
+
                 Console.WriteLine("boken är nu återlämnad");
                 
             }
