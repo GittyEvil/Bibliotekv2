@@ -32,7 +32,9 @@ namespace Bibliotektemp
             {
                 string Data = File.ReadAllText(@"C:\Users\adria\Documents\Bibliotektemp\Bibliotektemp\Books.json");
                 List<Book> BookList = JsonConvert.DeserializeObject<List<Book>>(Data)!;
-                for(var i = 0; i < BookList.Count; i++)
+                string UserData = File.ReadAllText(@"C:\Users\adria\Documents\Bibliotektemp\Bibliotektemp\userAccounts.json");
+                List<Person> UserList = JsonConvert.DeserializeObject<List<Person>>(UserData)!;
+                for (var i = 0; i < BookList.Count; i++)
                 {
                     Book book = BookList[i];
                     Console.WriteLine($"{i + 1}.{book.Titel} {book.Författare} {book.Serienummer} {book.Antal}");
@@ -53,7 +55,7 @@ namespace Bibliotektemp
                     if (isNumber && number > 0 && number < BookList.Count + 1)
                     {
                         var chosenbook = BookList[number - 1];
-                        SpecifikBookPage(User, chosenbook, BookList);
+                        SpecifikBookPage(User, chosenbook, BookList, UserList);
                     }
                     
                 }
@@ -63,7 +65,7 @@ namespace Bibliotektemp
                 }
             }
 
-            public static void SpecifikBookPage(Person User, Book book, List<Book> BookList)
+            public static void SpecifikBookPage(Person User, Book book, List<Book> BookList, List<Person> UserList)
             {
                 Console.WriteLine(book.Titel);
                 Console.WriteLine(book.Författare);
@@ -112,53 +114,50 @@ namespace Bibliotektemp
 
                 else if (choice == "2" && book.Ledig)
                 {
-                    //System.Lånabok(bok);
-
-                    Lånabok(book, User, BookList);
+                    Lånabok(book, User, BookList, UserList);
                 }
 
                 else if (choice == "2" && UserisRenting)
                 {
                     //System.Returnbooks(bok);
-                    LämnatillbakaBöcker();
+                    LämnatillbakaBöcker(book, User, BookList, UserList);
                 }
             }
 
             }
-            static void Lånabok(Book book, Person User,List<Book> BookList)
+        static void Lånabok(Book book, Person user, List<Book> bookList, List<Person> userList)
+        {
+            if (book.Ledig)
             {
-                
-                
-                if(book.Ledig)
-                {
-                    string Data = @"C:\Users\adria\Documents\Bibliotektemp\Bibliotektemp\userAccounts.json";
+                //hittar användaren i userlistan(den som är inloggad)
+                Person loggedInUser = userList.FirstOrDefault(u => u.id == user.id)!;
 
-                    Book rentedBook = new Book(book.Titel!);
+                Book rentedBook = new (book.Titel!,book.Serienummer);
 
-                    book.Ledig = false;
+                book.Ledig = false;
 
-                    User.RentedBooks.Add(rentedBook);
-                    string rentBook = JsonConvert.SerializeObject(BookList, Formatting.Indented);
-                    File.WriteAllText(Data,rentBook);
-                    Console.WriteLine($"Du har lånat boken '{book.Titel}'. Glöm inte att lämna tillbaka den senast om tre veckor.");
-                }
-            {
+                loggedInUser.RentedBooks.Add(rentedBook);
 
+                string data = @"C:\Users\adria\Documents\Bibliotektemp\Bibliotektemp\userAccounts.json";
+                string json = JsonConvert.SerializeObject(userList, Formatting.Indented);
+
+                File.WriteAllText(data, json);
+
+                Console.WriteLine($"Du har lånat boken '{book.Titel}'. Glöm inte att lämna tillbaka den senast om tre veckor.");
             }
-            }
-
-            void ListaLånadeBöcker()
+        }
+        void ListaLånadeBöcker()
             {
                 //fixa så man kan lista lånade böcker
                 Console.WriteLine("");
             }
 
 
-            public static void LämnatillbakaBöcker()
+            public static void LämnatillbakaBöcker(Book book, Person user, List<Book> bookList, List<Person> userList)
             {
-                //lämna tillbaka böcker
+                
                 Console.WriteLine("boken är nu återlämnad");
-                //Listaböcker();
+                
             }
                 
         }
