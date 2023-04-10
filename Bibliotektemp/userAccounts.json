@@ -1,6 +1,13 @@
 [
   {
     "RentedBooks": [
+      {
+        "Titel": "Things Fall Apart",
+        "Serienummer": 1958,
+        "Antal": null,
+        "Författare": null,
+        "Ledig": false
+      }
     ],
     "förnamn": "",
     "efternamn": "",

@@ -125,12 +125,12 @@ namespace Bibliotektemp
             }
 
             }
-        static void Lånabok(Book book, Person user, List<Book> bookList, List<Person> userList)
+        static void Lånabok(Book book, Person User, List<Book> BookList, List<Person> UserList)
         {
             if (book.Ledig)
             {
                 //hittar användaren i userlistan(den som är inloggad)
-                Person loggedInUser = userList.FirstOrDefault(u => u.id == user.id)!;
+                Person loggedInUser = UserList.FirstOrDefault(u => u.id == User.id)!;
 
                 Book rentedBook = new (book.Titel!,book.Serienummer);
 
@@ -139,7 +139,7 @@ namespace Bibliotektemp
                 loggedInUser.RentedBooks.Add(rentedBook);
 
                 string data = @"C:\Users\adria\Documents\Bibliotektemp\Bibliotektemp\userAccounts.json";
-                string json = JsonConvert.SerializeObject(userList, Formatting.Indented);
+                string json = JsonConvert.SerializeObject(UserList, Formatting.Indented);
 
                 File.WriteAllText(data, json);
 
@@ -153,9 +153,9 @@ namespace Bibliotektemp
             }
 
 
-            public static void LämnatillbakaBöcker(Book book, Person user, List<Book> bookList, List<Person> userList)
+            public static void LämnatillbakaBöcker(Book book, Person User, List<Book> BookList, List<Person> UserList)
             {
-                
+                //Behöver kolla användarens rentedbooks, stämmer boken som man valt över med boken i userns lista så ska den lämna tillbaka boken, fixa med antal osv
                 Console.WriteLine("boken är nu återlämnad");
                 
             }
