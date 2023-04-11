@@ -91,7 +91,7 @@ namespace Bibliotektemp
                 }
 
 
-                if (book.Ledig)
+                if (UserisRenting == false)
                 {
                     Console.WriteLine("2. Låna bok");
 
@@ -112,9 +112,9 @@ namespace Bibliotektemp
                     ListAllbooks(User);
                 }
 
-                else if (choice == "2" && book.Ledig)
+                else if (choice == "2" && UserisRenting == false)
                 {
-                    Lånabok(book, User, BookList, UserList);
+                    Lånabok(book, User, BookList, UserList,UserisRenting);
                 }
 
                 else if (choice == "2" && UserisRenting)
@@ -124,9 +124,9 @@ namespace Bibliotektemp
             }
 
         }
-        static void Lånabok(Book book, Person User, List<Book> BookList, List<Person> UserList)
+        static void Lånabok(Book book, Person User, List<Book> BookList, List<Person> UserList, bool UserIsRenting)
         {
-            if (book.Ledig)
+            if (UserIsRenting == false)
             {
                 //hittar användaren i userlistan(den som är inloggad)
                 Person loggedInUser = UserList.FirstOrDefault(u => u.id == User.id)!;
@@ -170,7 +170,8 @@ namespace Bibliotektemp
                 {
                     User.RentedBooks.Remove(rentedBook);
                     Console.WriteLine("Boken är nu återlämnad.");
-                    UpdateJson(UserList, BookList); 
+                    UpdateJson(UserList, BookList);
+                    book.Ledig = true;
                     return;
                 }
             }
