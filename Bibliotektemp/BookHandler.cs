@@ -40,7 +40,7 @@ namespace Bibliotektemp
                     Console.WriteLine($"{i + 1}.{book.Titel} {book.Författare} {book.Serienummer} {book.Antal}");
                     //book.Ledig = true;
                 }
-                
+
                 Console.WriteLine("Skulle du vilja söka efter en specifik bok? 1:Ja, 2:Nej");
                 string val = Console.ReadLine()!;
 
@@ -51,13 +51,13 @@ namespace Bibliotektemp
                     int number;
 
                     var isNumber = int.TryParse(choice, out number);
-                    
+
                     if (isNumber && number > 0 && number < BookList.Count + 1)
                     {
                         var chosenbook = BookList[number - 1];
                         SpecifikBookPage(User, chosenbook, BookList, UserList);
                     }
-                    
+
                 }
                 if (val == "2")
                 {
@@ -77,7 +77,7 @@ namespace Bibliotektemp
 
                 //bool userIsRenting = System.currentPersonLoaningBook(book);
                 bool UserisRenting = false;
-                
+
                 if (User.RentedBooks != null)
                 {
                     foreach (Book Book in User.RentedBooks)
@@ -89,7 +89,7 @@ namespace Bibliotektemp
                         }
                     }
                 }
-                
+
 
                 if (book.Ledig)
                 {
@@ -123,7 +123,7 @@ namespace Bibliotektemp
                 }
             }
 
-            }
+        }
         static void Lånabok(Book book, Person User, List<Book> BookList, List<Person> UserList)
         {
             if (book.Ledig)
@@ -131,7 +131,7 @@ namespace Bibliotektemp
                 //hittar användaren i userlistan(den som är inloggad)
                 Person loggedInUser = UserList.FirstOrDefault(u => u.id == User.id)!;
 
-                Book rentedBook = new (book.Titel!,book.Serienummer);
+                Book rentedBook = new(book.Titel!, book.Serienummer, book.Författare, book.Antal);
 
                 book.Ledig = false;
 
@@ -146,25 +146,37 @@ namespace Bibliotektemp
             }
         }
         void ListaLånadeBöcker()
-            {
-                //fixa så man kan lista lånade böcker
-                Console.WriteLine("");
-            }
-
-
-            public static void LämnatillbakaBöcker(Book book, Person User, List<Book> BookList, List<Person> UserList)
-            {
-                //Behöver kolla användarens rentedbooks, stämmer boken som man valt över med boken i userns lista så ska den lämna tillbaka boken, fixa med antal osv
-                Book bookremover = null;
-                foreach(Book Removebook in User.RentedBooks)
-                {
-                    bookremover = Removebook;
-                    User.RentedBooks.Remove(bookremover);
-                }
-
-                Console.WriteLine("boken är nu återlämnad");
-                
-            }
-                
+        {
+            //fixa så man kan lista lånade böcker
+            Console.WriteLine("");
         }
+
+        //skapade denna för att spara den nya informationen/ändringen som skett, ska fixa så att den körs vid alla tillfällen över projektet
+        public static void UpdateJson(List<Person> UserList, List<Book> BookList)
+        {
+            string jsonString = JsonConvert.SerializeObject(UserList, Formatting.Indented);
+            File.WriteAllText(@"C:\Users\adria\Documents\Bibliotektemp\Bibliotektemp\userAccounts.json", jsonString);
+
+            jsonString = JsonConvert.SerializeObject(BookList, Formatting.Indented);
+            File.WriteAllText(@"C:\Users\adria\Documents\Bibliotektemp\Bibliotektemp\Books.json", jsonString);
+        }
+
+        public static void LämnatillbakaBöcker(Book book, Person User, List<Book> BookList, List<Person> UserList)
+        {
+            //ska kolla om den inloggade användaren har lånat samma bok som man vill lämna tillbaka om det stämmer lämnar man tillbaka
+            foreach (Book rentedBook in User.RentedBooks)
+            {
+                if (rentedBook.Serienummer == book.Serienummer)
+                {
+                    User.RentedBooks.Remove(rentedBook);
+                    Console.WriteLine("Boken är nu återlämnad.");
+                    UpdateJson(UserList, BookList); 
+                    return;
+                }
+            }
+            Console.WriteLine("Kunde inte hitta boken i användarens hyrda böcker.");
+        }
+
+
     }
+}

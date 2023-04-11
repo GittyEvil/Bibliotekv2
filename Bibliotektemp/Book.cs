@@ -37,10 +37,12 @@ namespace Bibliotektemp
         {
             Titel = titel;
         }
-        public Book(string titel, int? serienummer)
+        public Book(string titel, int? serienummer, string? författare, int? antal)
         {
             Titel = titel;
             Serienummer = serienummer;
+            Författare = författare;
+            Antal = antal;
         }
     }
 }
