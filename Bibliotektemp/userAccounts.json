@@ -1,14 +1,6 @@
 [
   {
-    "RentedBooks": [
-      {
-        "Titel": "Things Fall Apart",
-        "Serienummer": 1958,
-        "Antal": 209,
-        "Författare": "Chinua",
-        "Ledig": false
-      }
-    ],
+    "RentedBooks": [],
     "förnamn": "",
     "efternamn": "",
     "id": null,

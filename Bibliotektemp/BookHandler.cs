@@ -119,7 +119,7 @@ namespace Bibliotektemp
 
                 else if (choice == "2" && UserisRenting)
                 {
-                    LämnatillbakaBöcker(book, User, BookList, UserList);
+                    ReturnBooks(book, User, BookList, UserList);
                 }
             }
 
@@ -145,10 +145,16 @@ namespace Bibliotektemp
                 Console.WriteLine($"Du har lånat boken '{book.Titel}'. Glöm inte att lämna tillbaka den senast om tre veckor.");
             }
         }
-        void ListaLånadeBöcker()
+        void SearchForBook(Book book, List<Person> UserList, List<Book> BookList, Person User, bool UserIsRenting)
         {
-            //fixa så man kan lista lånade böcker
-            Console.WriteLine("");
+            //söka bok genom att kolla igenom BookList(alla böcker) om bok existerar kunna sedan låna bok ifall den är ledig.
+            Console.WriteLine("Vad vill du söka efter?, du kan söka med titel, författare eller seriernummer?");
+            string bokVal = Console.ReadLine();
+            if(BookList.Contains(bokVal))
+            {
+
+            }
+
         }
 
         //skapade denna för att spara den nya informationen/ändringen som skett, ska fixa så att den körs vid alla tillfällen över projektet
@@ -161,7 +167,7 @@ namespace Bibliotektemp
             File.WriteAllText(@"C:\Users\adria\Documents\Bibliotektemp\Bibliotektemp\Books.json", jsonString);
         }
 
-        public static void LämnatillbakaBöcker(Book book, Person User, List<Book> BookList, List<Person> UserList)
+        public static void ReturnBooks(Book book, Person User, List<Book> BookList, List<Person> UserList)
         {
             //ska kolla om den inloggade användaren har lånat samma bok som man vill lämna tillbaka om det stämmer lämnar man tillbaka
             foreach (Book rentedBook in User.RentedBooks)
