@@ -170,9 +170,15 @@ namespace Bibliotektemp
                 {
                     User.RentedBooks.Remove(rentedBook);
                     Console.WriteLine("Boken är nu återlämnad.");
-                    UpdateJson(UserList, BookList);
                     book.Ledig = true;
-                    return;
+                    //firstordefault letar efter den inloggade användaren i UserList för att sedan ta bort dess bok som den lånade
+                    Person updatedUser = UserList.FirstOrDefault(u => u.personnummer == User.personnummer)!;
+                    if (updatedUser != null)
+                    {
+                        updatedUser.RentedBooks = User.RentedBooks;
+                        UpdateJson(UserList, BookList);
+                        return;
+                    }
                 }
             }
             Console.WriteLine("Kunde inte hitta boken i användarens hyrda böcker.");

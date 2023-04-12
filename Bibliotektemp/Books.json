@@ -4,14 +4,14 @@
     "Serienummer": 1958,
     "Antal": 209,
     "Författare": "Chinua",
-    "Ledig": false
+    "Ledig": true
   },
   {
     "Titel": "Fairy tales",
     "Serienummer": 1836,
     "Antal": 784,
     "Författare": "Hans Christian Andersen",
-    "Ledig": false
+    "Ledig": true
   },
   {
     "Titel": "The Divine Comedy",
