@@ -44,8 +44,6 @@ namespace Bibliotektemp
         }
         public static void MainPage(Person User)
         {
-            //string bookData = File.ReadAllText(@"C:\Users\adria\Downloads\ConsoleApp1\ConsoleApp1\ConsoleApp1\Books.json");
-            //List<Book> BookList = JsonConvert.DeserializeObject<List<Book>>(bookData)!;
             Console.WriteLine("Nu är du inloggad");
             Console.WriteLine("Vad vill du göra nu?");
             Console.WriteLine("1. Lista böcker,2. Söka böcker,3. Ändra kontouppgifter ,4. Logga ut");
@@ -54,11 +52,13 @@ namespace Bibliotektemp
 
             if(val == "1")
             {
-                BookHandler.Handlebook.ListAllbooks(User);
+                (List<Book> BookList, List<Person> UserList, bool UserisRenting) = BookHandler.Handlebook.ListAllbooks(User);
+
             }
             if (val == "2")
             {
-
+                //funktionen fungerar men har inte löst hur jag ska köra den.
+                //BookHandler.Handlebook.SearchForBook(BookList, UserList, UserisRenting, User);
             }
             if (val == "3")
             {

@@ -24,11 +24,11 @@ namespace Bibliotektemp
                 int antal = Int32.Parse((Console.ReadLine()!));
 
                 Book nybok = new Book(titel, antal, serienummer, författare);
-                //System.AddBok(nybok);
+                
             }
 
 
-            public static void ListAllbooks(Person User)
+            public static (List<Book>, List<Person>, bool) ListAllbooks(Person User)
             {
                 string Data = File.ReadAllText(@"C:\Users\adria\Documents\Bibliotektemp\Bibliotektemp\Books.json");
                 List<Book> BookList = JsonConvert.DeserializeObject<List<Book>>(Data)!;
@@ -38,7 +38,7 @@ namespace Bibliotektemp
                 {
                     Book book = BookList[i];
                     Console.WriteLine($"{i + 1}.{book.Titel} {book.Författare} {book.Serienummer} {book.Antal}");
-                    //book.Ledig = true;
+                    
                 }
 
                 Console.WriteLine("Skulle du vilja söka efter en specifik bok? 1:Ja, 2:Nej");
@@ -61,12 +61,14 @@ namespace Bibliotektemp
                 }
                 if (val == "2")
                 {
-                    //Program.MainPage();
+                    Program.MainPage(User);
                 }
+                return (BookList, UserList, User.RentedBooks != null);
             }
 
             public static void SpecifikBookPage(Person User, Book book, List<Book> BookList, List<Person> UserList)
             {
+
                 Console.WriteLine(book.Titel);
                 Console.WriteLine(book.Författare);
                 Console.WriteLine(book.Serienummer);
@@ -74,8 +76,6 @@ namespace Bibliotektemp
 
                 Console.WriteLine("Vad skulle du vilja göra nu?");
                 Console.WriteLine("1. Gå tillbaka");
-
-                //bool userIsRenting = System.currentPersonLoaningBook(book);
                 bool UserisRenting = false;
 
                 if (User.RentedBooks != null)
@@ -114,7 +114,7 @@ namespace Bibliotektemp
 
                 else if (choice == "2" && UserisRenting == false)
                 {
-                    Lånabok(book, User, BookList, UserList,UserisRenting);
+                    RentBook(book, User, BookList, UserList,UserisRenting);
                 }
 
                 else if (choice == "2" && UserisRenting)
@@ -124,9 +124,9 @@ namespace Bibliotektemp
             }
 
         }
-        static void Lånabok(Book book, Person User, List<Book> BookList, List<Person> UserList, bool UserIsRenting)
+        static void RentBook(Book book, Person User, List<Book> BookList, List<Person> UserList, bool UserisRenting)
         {
-            if (UserIsRenting == false)
+            if (UserisRenting == false)
             {
                 //hittar användaren i userlistan(den som är inloggad)
                 Person loggedInUser = UserList.FirstOrDefault(u => u.id == User.id)!;
@@ -145,16 +145,53 @@ namespace Bibliotektemp
                 Console.WriteLine($"Du har lånat boken '{book.Titel}'. Glöm inte att lämna tillbaka den senast om tre veckor.");
             }
         }
-        void SearchForBook(Book book, List<Person> UserList, List<Book> BookList, Person User, bool UserIsRenting)
+        public static void SearchForBook(List<Book> BookList, List<Person> UserList, bool UserisRenting, Person User)
         {
-            //söka bok genom att kolla igenom BookList(alla böcker) om bok existerar kunna sedan låna bok ifall den är ledig.
-            Console.WriteLine("Vad vill du söka efter?, du kan söka med titel, författare eller seriernummer?");
-            string bokVal = Console.ReadLine();
-            if(BookList.Contains(bokVal))
+            Console.WriteLine("Vad vill du söka efter? Du kan söka med titel, författare eller seriernummer:");
+            string searchQuery = Console.ReadLine()!;
+
+            Book book = BookList.FirstOrDefault(b => b.Titel?.ToLower() == searchQuery.ToLower() || b.Författare?.ToLower() == searchQuery.ToLower() || b.Serienummer.ToString() == searchQuery)!;
+
+            if (book != null)
             {
+                Console.WriteLine($"Hittade följande bok: {book.Titel} av {book.Författare}, serienummer {book.Serienummer}");
+                
+                    
+                if (UserisRenting == false)
+                {
+                    Console.WriteLine("2. Låna bok");
 
+                }
+
+
+                if (UserisRenting)
+                {
+                    Console.WriteLine("2. Lämna tillbaka bok");
+
+                }
+
+                Console.Write("Ditt val (1-2): ");
+                var choice = Console.ReadLine();
+                Console.WriteLine("1. Gå tillbaka");
+                if (choice == "1")
+                {
+                    Program.MainPage(User);
+                }
+
+                else if (choice == "2" && UserisRenting == false)
+                {
+                    RentBook(book, User, BookList, UserList, UserisRenting);
+                }
+
+                else if (choice == "2" && UserisRenting)
+                {
+                    ReturnBooks(book, User, BookList, UserList);
+                }
             }
-
+            else
+            {
+                Console.WriteLine("Boken kunde inte hittas.");
+            }
         }
 
         //skapade denna för att spara den nya informationen/ändringen som skett, ska fixa så att den körs vid alla tillfällen över projektet

@@ -19,7 +19,6 @@ namespace Bibliotektemp
             string Data = File.ReadAllText("C:\\Users\\adria\\Documents\\Bibliotektemp\\Bibliotektemp\\userAccounts.json");
             List<Person> UserList = JsonConvert.DeserializeObject<List<Person>>(Data)!;
 
-            //Person user = null;
 
             Console.WriteLine("Logga in:");
             Console.WriteLine("Personnummer:");
@@ -34,7 +33,6 @@ namespace Bibliotektemp
                 var personnummer = user.personnummer;
                 var password1 = user.lösenord;
 
-                //LoggedInPerson = new Person(personnummer.ToString(), password1.ToString());
 
                 if (personnummer.ToString() == number && password == password1.ToString())
                 {
@@ -48,12 +46,10 @@ namespace Bibliotektemp
 
         public static void RegisterPage(List<Person> UserList)
         {
-            //string Data = File.ReadAllText("C:\\Users\\adria\\Documents\\Bibliotektemp\\Bibliotektemp\\userAccounts.json");
-            //dynamic personData = JsonConvert.DeserializeObject<dynamic>(Data)!;
-            //List<Person> UserList = JsonConvert.DeserializeObject<List<Person>>(Data)!;
+            
             if (UserList == null)
             {
-                UserList = new List<Person>(); // Initialize UserList if it is null
+                UserList = new List<Person>(); 
             }
             Console.WriteLine("skriv personnummer:");
             string personnummer1 = Console.ReadLine()!;
@@ -63,13 +59,7 @@ namespace Bibliotektemp
 
             Person newUser = new ("", "", Int32.Parse(personnummer1!), Int32.Parse(lösenord1!));
 
-            /*
-            if (personData == null)
-            {
-                personData = new JArray();
-            }
-            personData.Add(JToken.FromObject(newUser));
-            */
+            
             UserList.Add(newUser);
 
             string dataToSave = JsonConvert.SerializeObject(UserList);

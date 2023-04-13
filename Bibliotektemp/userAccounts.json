@@ -1,6 +1,14 @@
 [
   {
-    "RentedBooks": [],
+    "RentedBooks": [
+      {
+        "Titel": "Fairy tales",
+        "Serienummer": 1836,
+        "Antal": 784,
+        "Författare": "Hans Christian Andersen",
+        "Ledig": false
+      }
+    ],
     "förnamn": "",
     "efternamn": "",
     "id": null,
