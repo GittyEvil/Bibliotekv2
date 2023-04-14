@@ -14,7 +14,7 @@ namespace Bibliotektemp
 
     {
         public static Person LoggedInPerson = null!;
-        public static void LoginPage()
+        public static void LoginPage(bool UserisRenting)
         {
             string Data = File.ReadAllText("C:\\Users\\adria\\Documents\\Bibliotektemp\\Bibliotektemp\\userAccounts.json");
             List<Person> UserList = JsonConvert.DeserializeObject<List<Person>>(Data)!;
@@ -37,14 +37,14 @@ namespace Bibliotektemp
                 if (personnummer.ToString() == number && password == password1.ToString())
                 {
                     User = user;
-                    Program.MainPage(User);
+                    Program.MainPage(User, UserisRenting);
                     return;
                 }
 
             }
         }
 
-        public static void RegisterPage(List<Person> UserList)
+        public static void RegisterPage(List<Person> UserList, bool UserisRenting)
         {
             
             if (UserList == null)
@@ -65,7 +65,7 @@ namespace Bibliotektemp
             string dataToSave = JsonConvert.SerializeObject(UserList);
             File.WriteAllText("C:\\Users\\adria\\Documents\\Bibliotektemp\\Bibliotektemp\\userAccounts.json", dataToSave);
 
-            LoginPage();
+            LoginPage(UserisRenting);
 
         }
 

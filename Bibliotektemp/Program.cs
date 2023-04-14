@@ -8,7 +8,7 @@ namespace Bibliotektemp
 
         public static Person? loggedInPerson;
         public static string userData = File.ReadAllText("C:\\Users\\adria\\Documents\\Bibliotektemp\\Bibliotektemp\\userAccounts.json");
-        static void Main(string[] args)
+        public static void Main(string[] args, bool UserisRenting)
         {
             string Data = File.ReadAllText("C:\\Users\\adria\\Documents\\Bibliotektemp\\Bibliotektemp\\userAccounts.json");
             List<Person> UserList = JsonConvert.DeserializeObject<List<Person>>(Data)!;
@@ -24,12 +24,12 @@ namespace Bibliotektemp
 
             if (val == "1")
             {
-                AccountHandler.RegisterPage(UserList);
+                AccountHandler.RegisterPage(UserList, UserisRenting);
             }
 
             if (val == "2")
             {
-                AccountHandler.LoginPage();
+                AccountHandler.LoginPage(UserisRenting);
             } 
         }
 
@@ -42,8 +42,12 @@ namespace Bibliotektemp
                 loggedInPerson = new Person((int)i.personnummer, (int)i.lösenord);
             }
         }
-        public static void MainPage(Person User)
+        public static void MainPage(Person User, bool UserisRenting)
         {
+            string Data = File.ReadAllText(@"C:\Users\adria\Documents\Bibliotektemp\Bibliotektemp\Books.json");
+            List<Book> BookList = JsonConvert.DeserializeObject<List<Book>>(Data)!;
+            string UserData = File.ReadAllText(@"C:\Users\adria\Documents\Bibliotektemp\Bibliotektemp\userAccounts.json");
+            List<Person> UserList = JsonConvert.DeserializeObject<List<Person>>(UserData)!;
             Console.WriteLine("Nu är du inloggad");
             Console.WriteLine("Vad vill du göra nu?");
             Console.WriteLine("1. Lista böcker,2. Söka böcker,3. Ändra kontouppgifter ,4. Logga ut");
@@ -52,13 +56,13 @@ namespace Bibliotektemp
 
             if(val == "1")
             {
-                (List<Book> BookList, List<Person> UserList, bool UserisRenting) = BookHandler.Handlebook.ListAllbooks(User);
+                BookHandler.Handlebook.ListAllbooks(User, UserisRenting);
 
             }
             if (val == "2")
             {
                 //funktionen fungerar men har inte löst hur jag ska köra den.
-                //BookHandler.Handlebook.SearchForBook(BookList, UserList, UserisRenting, User);
+                BookHandler.Handlebook.SearchForBook(BookList, UserList, UserisRenting, User);
             }
             if (val == "3")
             {
