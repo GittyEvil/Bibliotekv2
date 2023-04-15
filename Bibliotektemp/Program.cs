@@ -34,15 +34,7 @@ namespace Bibliotektemp
             } 
         }
 
-       
-        public static void LoggedUser()
-        {
-            dynamic personData = JsonConvert.DeserializeObject<dynamic>(userData)!;
-            foreach (var i in personData)
-            {
-                loggedInPerson = new Person((int)i.personnummer, (int)i.lösenord);
-            }
-        }
+        
         public static void MainPage(Person User, bool UserisRenting)
         {
             string Data = File.ReadAllText(@"C:\Users\adria\Documents\Bibliotektemp\Bibliotektemp\Books.json");

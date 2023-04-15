@@ -27,7 +27,7 @@ namespace Bibliotektemp
                 
             }
 
-
+            //listar alla böcker där användaren senare kan låna en bok efter de valt vilken
             public static void ListAllbooks(Person User, bool UserisRenting)
             {
                 string Data = File.ReadAllText(@"C:\Users\adria\Documents\Bibliotektemp\Bibliotektemp\Books.json");
@@ -65,7 +65,7 @@ namespace Bibliotektemp
                 }
                
             }
-
+            //sidan hanterar boken som användaren valt
             public static void SpecifikBookPage(Person User, Book book, List<Book> BookList, List<Person> UserList)
             {
 
@@ -124,7 +124,7 @@ namespace Bibliotektemp
                     Program.MainPage(User, UserisRenting);
                 }
             }
-
+            //låna bok funktionen,tar reda på den inloggade användaren och lägger boken i dens lista
             static void RentBook(Book book, Person User, List<Book> BookList, List<Person> UserList, bool UserisRenting)
             {
                 if (UserisRenting == false)
@@ -146,11 +146,12 @@ namespace Bibliotektemp
                     Console.WriteLine($"Du har lånat boken '{book.Titel}'. Glöm inte att lämna tillbaka den senast om tre veckor.");
                 }
             }
+            //funktionen hanterar att söka upp en bok ifrån listan med alla böcker, det går att låna efter
             public static void SearchForBook(List<Book> BookList, List<Person> UserList, bool UserisRenting, Person User)
             {
                 Console.WriteLine("Vad vill du söka efter? Du kan söka med titel, författare eller seriernummer:");
                 string searchQuery = Console.ReadLine()!;
-
+                //letar upp boken som man sökt efter, firstordefault loopar igenom listan och tar första bästa som matchar värdet/kraven
                 Book book = BookList.FirstOrDefault(b => b.Titel?.ToLower() == searchQuery.ToLower() || b.Författare?.ToLower() == searchQuery.ToLower() || b.Serienummer.ToString() == searchQuery)!;
 
                 if (book != null)

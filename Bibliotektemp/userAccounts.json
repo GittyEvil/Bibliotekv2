@@ -7,12 +7,19 @@
         "Antal": 784,
         "Författare": "Hans Christian Andersen",
         "Ledig": false
+      },
+      {
+        "Titel": "Ficciones",
+        "Serienummer": 1965,
+        "Antal": 224,
+        "Författare": "Jorge Luis Borges",
+        "Ledig": false
       }
     ],
     "förnamn": "",
     "efternamn": "",
     "id": null,
     "personnummer": 123,
-    "lösenord": 1234
+    "lösenord": 123
   }
 ]
