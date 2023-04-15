@@ -13,7 +13,7 @@ namespace Bibliotektemp
     public class AccountHandler
 
     {
-        public static Person LoggedInPerson = null!;
+        
         public static void LoginPage(bool UserisRenting)
         {
             string Data = File.ReadAllText("C:\\Users\\adria\\Documents\\Bibliotektemp\\Bibliotektemp\\userAccounts.json");

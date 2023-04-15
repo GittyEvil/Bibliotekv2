@@ -16,7 +16,7 @@ namespace Bibliotektemp
 
         public Book()
         {
-            // parameterless constructor
+            
         }
         public Book(string bokTitel, int bokAntal, int bokSerienummer, string bokFörfattare, bool bokLedig = true)
         {

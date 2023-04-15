@@ -110,17 +110,18 @@ namespace Bibliotektemp
                 if (choice == "1")
                 {
                     ListAllbooks(User, UserisRenting);
-                    //SearchForBook(BookList,UserList,UserisRenting,User);
                 }
 
                 else if (choice == "2" && UserisRenting == false)
                 {
                     RentBook(book, User, BookList, UserList,UserisRenting);
+                    Program.MainPage(User, UserisRenting);
                 }
 
                 else if (choice == "2" && UserisRenting)
                 {
                     ReturnBooks(book, User, BookList, UserList);
+                    Program.MainPage(User, UserisRenting);
                 }
             }
 
@@ -181,11 +182,13 @@ namespace Bibliotektemp
                     else if (choice == "2" && UserisRenting == false)
                     {
                         RentBook(book, User, BookList, UserList, UserisRenting);
+                        Program.MainPage(User, UserisRenting);
                     }
 
                     else if (choice == "2" && UserisRenting)
                     {
                         ReturnBooks(book, User, BookList, UserList);
+                        Program.MainPage(User, UserisRenting);
                     }
                 }
                 else

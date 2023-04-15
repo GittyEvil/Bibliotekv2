@@ -8,7 +8,7 @@ namespace Bibliotektemp
 
         public static Person? loggedInPerson;
         public static string userData = File.ReadAllText("C:\\Users\\adria\\Documents\\Bibliotektemp\\Bibliotektemp\\userAccounts.json");
-        public static void Main(string[] args, bool UserisRenting)
+        public static void Main(string[] args)
         {
             string Data = File.ReadAllText("C:\\Users\\adria\\Documents\\Bibliotektemp\\Bibliotektemp\\userAccounts.json");
             List<Person> UserList = JsonConvert.DeserializeObject<List<Person>>(Data)!;
@@ -16,6 +16,7 @@ namespace Bibliotektemp
             string userData = File.ReadAllText("C:\\Users\\adria\\Documents\\Bibliotektemp\\Bibliotektemp\\userAccounts.json");
             //dynamic personData = JsonConvert.DeserializeObject<dynamic>(Data)!;
             List<Book> BookList = JsonConvert.DeserializeObject<List<Book>>(userData)!;
+            bool UserisRenting = false;
             Console.WriteLine("hej och välkommen till Biblioteket i väst");
             Console.WriteLine("Vad skulle du vilja göra?");
             Console.WriteLine("1. Skapa konto, 2. Logga in");

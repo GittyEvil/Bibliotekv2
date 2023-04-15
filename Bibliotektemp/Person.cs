@@ -17,7 +17,7 @@ namespace Bibliotektemp
             public List<Book> RentedBooks = new List<Book>();
             public Person()
             {
-                // parameterless constructor
+                
             }
             public Person(string förnamn, string id) 
             {
