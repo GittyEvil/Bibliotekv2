@@ -69,7 +69,31 @@ namespace Bibliotektemp
 
         }
 
-        
+        public static void UserInfoChanger(List<Person> UserList, Person User, List<Book> BookList)
+        {
+           
+            Console.WriteLine("Skulle du vilja byta lösenord?, 1:Ja , 2:Nej");
+            string val = Console.ReadLine()!;
+
+            if(val=="1")
+            {
+                Console.WriteLine("Skriv in ditt nya lösenord du skulle vilja ha, endast siffror");
+                int newPassword = Int32.Parse(Console.ReadLine())!;
+   
+                //hittar användaren i userlistan(den som är inloggad)
+                Person loggedInUser = UserList.FirstOrDefault(u => u.lösenord == User.lösenord)!;
+
+                //ger nytt lösenord till användaren som hittats
+                loggedInUser.lösenord = newPassword;
+
+                string data = @"C:\Users\adria\Documents\Bibliotektemp\Bibliotektemp\userAccounts.json";
+                string json = JsonConvert.SerializeObject(UserList, Formatting.Indented);
+
+                File.WriteAllText(data, json);
+            }
+
+            
+        }
 
     }
 }

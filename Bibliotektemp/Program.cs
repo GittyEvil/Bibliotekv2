@@ -67,7 +67,7 @@ namespace Bibliotektemp
             }
             if (val == "3")
             {
-
+                AccountHandler.UserInfoChanger(UserList, User, BookList);
             }
             if (val == "4")
             {
